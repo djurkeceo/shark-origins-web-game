@@ -65,6 +65,7 @@ const GameScreen = ({ state, dispatch }: GameScreenProps) => {
         timer={state.timer}
         foodCollected={state.foodCollected}
         foodTotal={state.phase.foodCount}
+        foodTarget={state.foodTarget}
         specialMechanic={state.phase.specialMechanic}
       />
       <div className="absolute inset-0 z-10">

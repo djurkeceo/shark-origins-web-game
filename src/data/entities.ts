@@ -24,7 +24,7 @@ const randomBetween = (min: number, max: number) =>
   Math.random() * (max - min) + min
 
 export const getFoodTarget = (phase: PhaseData) =>
-  Math.max(1, Math.ceil(phase.foodCount * 0.75))
+  Math.min(10, phase.foodCount)
 
 const randomPosition = (bounds: GameBounds, size: number) => ({
   x: randomBetween(size, bounds.width - size),

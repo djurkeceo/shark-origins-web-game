@@ -9,6 +9,7 @@ interface HUDProps {
   timer: number
   foodCollected: number
   foodTotal: number
+  foodTarget: number
   specialMechanic: PhaseData['specialMechanic']
 }
 
@@ -19,6 +20,7 @@ const HUD = ({
   timer,
   foodCollected,
   foodTotal,
+  foodTarget,
   specialMechanic,
 }: HUDProps) => {
   const minutes = Math.floor(timer / 60)
@@ -31,6 +33,9 @@ const HUD = ({
           <span className="font-heading text-lg text-[color:var(--accent)]">
             {phase.name}
           </span>
+          <span className="text-xs uppercase tracking-widest text-slate-300">
+            Faza {phaseIndex + 1}/6
+          </span>
           <span className="text-sm text-slate-200">{phase.era}</span>
           <HealthBar value={health} max={100} />
         </div>
@@ -39,6 +44,7 @@ const HUD = ({
           <div className="text-sm text-[color:var(--food-color)]">
             {foodCollected}/{foodTotal} ulovljeno
           </div>
+          <div className="text-xs text-slate-300">Cilj: {foodTarget}</div>
           {specialMechanic === 'asteroid' && (
             <span className="text-xs text-slate-300">
               Kiša asteroida — vreme ubrzano

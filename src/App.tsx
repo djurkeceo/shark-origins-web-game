@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import { useEffect, type ReactNode } from 'react'
 import { phases } from './data/phases'
 import IntroScreen from './components/screens/IntroScreen'
 import GameScreen from './components/screens/GameScreen'
@@ -8,8 +8,15 @@ import EndScreen from './components/screens/EndScreen'
 import { useGameStore } from './store/gameStore'
 
 const Screen = ({ active, children }: { active: boolean; children: ReactNode }) => {
+  useEffect(() => {
+    if (!active && document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur()
+    }
+  }, [active])
+
   return (
     <div
+      aria-hidden={!active}
       className={`absolute inset-0 transition-opacity duration-300 ${
         active ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
       }`}
@@ -32,7 +39,7 @@ function App() {
         <IntroScreen onStart={() => dispatch({ type: 'START_GAME' })} />
       </Screen>
       <Screen active={state.gameState === 'GAMEPLAY'}>
-        <GameScreen state={state} dispatch={dispatch} />
+        <GameScreen key={state.phaseIndex} state={state} dispatch={dispatch} />
       </Screen>
       <Screen active={state.gameState === 'EVOLUTION'}>
         <EvolutionScreen
