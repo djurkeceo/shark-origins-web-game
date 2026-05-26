@@ -3,12 +3,12 @@ import type { GameBounds, GameEntity, PhaseData } from '../types/game'
 import netSprite from '../assets/tiny_plankton_cluster.png'
 import asteroidSprite from '../assets/small_school_fish.png'
 
-export const PLAYER_SIZE = 56
-export const PREDATOR_SIZE = 64
-export const FOOD_SIZE = 28
-export const OBSTACLE_SIZE = 52
-export const ASTEROID_SIZE = 36
-export const NET_SIZE = 72
+export const PLAYER_SIZE = 72
+export const PREDATOR_SIZE = 84
+export const FOOD_SIZE = 40
+export const OBSTACLE_SIZE = 70
+export const ASTEROID_SIZE = 48
+export const NET_SIZE = 96
 
 export const SPEED_UNIT = 60
 export const PREDATOR_SPEED_UNIT = 50
@@ -24,19 +24,36 @@ const randomBetween = (min: number, max: number) =>
   Math.random() * (max - min) + min
 
 export const getFoodTarget = (phase: PhaseData) =>
-  Math.min(10, phase.foodCount)
+  Math.min(15, phase.foodCount)
 
 const randomPosition = (bounds: GameBounds, size: number) => ({
   x: randomBetween(size, bounds.width - size),
   y: randomBetween(size, bounds.height - size),
 })
 
+const isSafePosition = (
+  x: number,
+  y: number,
+  avoid: GameEntity[],
+  minDistance: number,
+) =>
+  avoid.every(
+    (entity) =>
+      Math.hypot(x - entity.x, y - entity.y) >=
+      entity.radius + minDistance,
+  )
+
 export const createFoodEntity = (
   id: string,
   phase: PhaseData,
   bounds: GameBounds,
+  avoid: GameEntity[] = [],
 ): GameEntity => {
-  const position = randomPosition(bounds, FOOD_SIZE)
+  let position = randomPosition(bounds, FOOD_SIZE)
+  for (let attempt = 0; attempt < 20; attempt += 1) {
+    if (isSafePosition(position.x, position.y, avoid, FOOD_SIZE)) break
+    position = randomPosition(bounds, FOOD_SIZE)
+  }
   return {
     id,
     type: 'food',
@@ -103,8 +120,15 @@ export const spawnPhaseEntities = (
   bounds: GameBounds,
 ): GameEntity[] => {
   const entities: GameEntity[] = []
+  if (phase.specialMechanic === 'nets') {
+    for (let i = 0; i < 3; i += 1) {
+      entities.push(createNetEntity(`net-${phase.id}-${i}`, bounds))
+    }
+  }
   for (let i = 0; i < phase.foodCount; i += 1) {
-    entities.push(createFoodEntity(`food-${phase.id}-${i}`, phase, bounds))
+    entities.push(
+      createFoodEntity(`food-${phase.id}-${i}`, phase, bounds, entities),
+    )
   }
   for (let i = 0; i < phase.predatorCount; i += 1) {
     const sprite =
@@ -118,11 +142,6 @@ export const spawnPhaseEntities = (
         bounds,
       ),
     )
-  }
-  if (phase.specialMechanic === 'nets') {
-    for (let i = 0; i < 3; i += 1) {
-      entities.push(createNetEntity(`net-${phase.id}-${i}`, bounds))
-    }
   }
   return entities
 }
