@@ -21,6 +21,7 @@ const Player = ({ player, sprite }: PlayerProps) => {
         left,
         top,
         transform: `scaleX(${scaleX})`,
+        transformOrigin: 'center',
       }}
     >
       <img src={sprite} alt="" className="sprite h-full w-full select-none" />

@@ -25,19 +25,19 @@ const EvolutionScreen = ({
     <div className="relative flex h-full w-full items-center justify-center bg-black/80">
       <div className="particle-layer absolute inset-0" />
       <div className="relative z-10 flex flex-col items-center gap-4">
-        <div className="flex items-center justify-center gap-6">
+        <div className="flex items-center justify-center gap-8">
           <img
             src={fromSprite}
             alt=""
-            className="sprite evolution-old h-32 w-32"
+            className="sprite evolution-old h-48 w-48"
           />
           <img
             src={toSprite}
             alt=""
-            className="sprite evolution-new h-32 w-32"
+            className="sprite evolution-new h-48 w-48"
           />
         </div>
-        <div className="font-heading text-2xl text-[color:var(--accent)]">
+        <div className="font-heading text-3xl text-[color:var(--accent)]">
           Evolucija u toku...
         </div>
       </div>

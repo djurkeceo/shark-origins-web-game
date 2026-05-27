@@ -121,10 +121,14 @@ const updateEntities = (
       const speed = entity.speed ?? phase.predatorSpeed * SPEED_UNIT
       const stepX = (dx / distance) * speed * delta
       const stepY = (dy / distance) * speed * delta
+      const nextX = clamp(entity.x + stepX, 0, bounds.width)
+      const nextY = clamp(entity.y + stepY, 0, bounds.height)
+      const facing = stepX < 0 ? 'left' : stepX > 0 ? 'right' : (entity.facing ?? 'right')
       return {
         ...entity,
-        x: clamp(entity.x + stepX, 0, bounds.width),
-        y: clamp(entity.y + stepY, 0, bounds.height),
+        x: nextX,
+        y: nextY,
+        facing,
       }
     }
     if (entity.type === 'food' && phase.specialMechanic === 'predator-mode') {
@@ -190,17 +194,24 @@ const processCollisions = (
 const reducer = (state: GameSnapshot, action: GameAction): GameSnapshot => {
   switch (action.type) {
     case 'START_GAME': {
-      return createPhaseSnapshot(0, state.bounds, [])
+      const snap = createPhaseSnapshot(0, state.bounds, [])
+      return { ...snap, gameState: 'FACTCARD', pendingFactIndex: 0 }
     }
     case 'RETRY_PHASE': {
       return createPhaseSnapshot(state.phaseIndex, state.bounds, state.adaptations)
     }
     case 'ADVANCE_PHASE': {
-      const nextIndex = Math.min(state.phaseIndex + 1, phases.length - 1)
-      return createPhaseSnapshot(nextIndex, state.bounds, state.adaptations)
+      const nextIndex = typeof state.pendingFactIndex === 'number'
+        ? state.pendingFactIndex
+        : Math.min(state.phaseIndex + 1, phases.length - 1)
+      const snap = createPhaseSnapshot(nextIndex, state.bounds, state.adaptations)
+      // clear pendingFactIndex when starting next gameplay
+      return { ...snap, pendingFactIndex: null }
     }
     case 'SHOW_FACTCARD': {
-      return { ...state, gameState: 'FACTCARD' }
+      // show fact for next phase index (if exists), otherwise current
+      const nextIdx = Math.min(state.phaseIndex + 1, phases.length - 1)
+      return { ...state, gameState: 'FACTCARD', pendingFactIndex: nextIdx }
     }
     case 'SET_GAME_STATE': {
       return {
@@ -211,6 +222,15 @@ const reducer = (state: GameSnapshot, action: GameAction): GameSnapshot => {
     }
     case 'SET_BOUNDS': {
       const updated = clampPlayer(state.player, action.bounds)
+      // If gameplay already running, respawn entities to new bounds so tokens are reachable
+      if (state.gameState === 'GAMEPLAY') {
+        const newEntities = spawnPhaseEntities(state.phase, action.bounds)
+        const centeredPlayer = clampPlayer(
+          { ...state.player, x: action.bounds.width / 2, y: action.bounds.height / 2 },
+          action.bounds,
+        )
+        return { ...state, bounds: action.bounds, player: centeredPlayer, entities: newEntities }
+      }
       return { ...state, bounds: action.bounds, player: updated }
     }
     case 'TICK': {
@@ -255,7 +275,8 @@ const reducer = (state: GameSnapshot, action: GameAction): GameSnapshot => {
           const asteroid = createAsteroidEntity(
             `asteroid-${state.phase.id}-${Math.random().toString(16).slice(2)}`,
             state.bounds,
-          )
+                      state.phase.predatorSprites[0],
+                    )
           entitiesWithAsteroids = [...updatedEntities, asteroid]
           asteroidSpawnTimer = ASTEROID_SPAWN_INTERVAL
         }

@@ -20,18 +20,18 @@ const FactCard = ({ fact, active, onContinue }: FactCardProps) => {
 
   return (
     <div className="flex h-full w-full items-center justify-center bg-black/70 px-6">
-      <div className="max-w-2xl rounded-2xl border border-white/20 bg-white/10 p-8 text-center text-slate-100 backdrop-blur-md">
-        <h2 className="font-heading text-3xl text-[color:var(--accent)]">
+      <div className="max-w-3xl rounded-2xl border border-white/20 bg-white/10 p-10 text-center text-slate-100 backdrop-blur-md">
+        <h2 className="font-heading text-4xl text-[color:var(--accent)]">
           {fact.title}
         </h2>
-        <p className="mt-4 text-lg">{fact.definition}</p>
-        <p className="mt-4 text-sm text-slate-200">{fact.creatureFact}</p>
+        <p className="mt-4 text-xl">{fact.definition}</p>
+        <p className="mt-4 text-lg text-slate-200">{fact.creatureFact}</p>
         {fact.adaptationGained && (
-          <p className="mt-4 text-sm text-[color:var(--accent)]">
+          <p className="mt-4 text-lg text-[color:var(--accent)]">
             Dobijena adaptacija: {fact.adaptationGained}
           </p>
         )}
-        <p className="mt-6 text-xs uppercase tracking-widest text-slate-300">
+        <p className="mt-6 text-sm uppercase tracking-widest text-slate-300">
           Pritisni ENTER da nastaviš
         </p>
       </div>

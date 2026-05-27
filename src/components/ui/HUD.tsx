@@ -29,22 +29,22 @@ const HUD = ({
   return (
     <div className="pointer-events-none absolute inset-0 z-20 flex flex-col justify-between p-6">
       <div className="flex items-start justify-between">
-        <div className="flex flex-col gap-2 rounded-xl bg-[color:var(--ui-bg)] p-4">
-          <span className="font-heading text-lg text-[color:var(--accent)]">
+        <div className="flex flex-col gap-3 rounded-xl bg-[color:var(--ui-bg)] p-6">
+          <span className="font-heading text-2xl text-[color:var(--accent)]">
             {phase.name}
           </span>
-          <span className="text-xs uppercase tracking-widest text-slate-300">
+          <span className="text-sm uppercase tracking-widest text-slate-300">
             Faza {phaseIndex + 1}/6
           </span>
-          <span className="text-sm text-slate-200">{phase.era}</span>
+          <span className="text-lg text-slate-200">{phase.era}</span>
           <HealthBar value={health} max={100} />
         </div>
-        <div className="flex flex-col items-end gap-2 rounded-xl bg-[color:var(--ui-bg)] p-4 text-right">
-          <div className="text-2xl font-semibold">{timeLabel}</div>
-          <div className="text-sm text-[color:var(--food-color)]">
+        <div className="flex flex-col items-end gap-3 rounded-xl bg-[color:var(--ui-bg)] p-6 text-right">
+          <div className="text-3xl font-bold">{timeLabel}</div>
+          <div className="text-lg text-[color:var(--food-color)]">
             {foodCollected}/{foodTotal} ulovljeno
           </div>
-          <div className="text-xs text-slate-300">Cilj: {foodTarget}</div>
+          <div className="text-sm text-slate-300">Cilj: {foodTarget}</div>
           {specialMechanic === 'asteroid' && (
             <span className="text-xs text-slate-300">
               Kiša asteroida — vreme ubrzano

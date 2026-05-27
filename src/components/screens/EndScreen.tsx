@@ -47,11 +47,11 @@ const EndScreen = ({
               key={phase.id}
               src={phase.sharkSprite}
               alt=""
-              className="sprite h-16 w-16"
+              className="sprite h-24 w-24"
             />
           ))}
         </div>
-        <div className="mt-6 text-left text-sm text-slate-200">
+        <div className="mt-6 text-left text-base text-slate-200">
           <div className="mb-2 font-heading text-[color:var(--accent)]">
             Adaptacije:
           </div>

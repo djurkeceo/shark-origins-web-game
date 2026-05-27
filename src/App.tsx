@@ -51,7 +51,7 @@ function App() {
       </Screen>
       <Screen active={state.gameState === 'FACTCARD'}>
         <FactCard
-          fact={state.phase.fact}
+          fact={phases[state.pendingFactIndex ?? state.phaseIndex].fact}
           active={state.gameState === 'FACTCARD'}
           onContinue={() => dispatch({ type: 'ADVANCE_PHASE' })}
         />

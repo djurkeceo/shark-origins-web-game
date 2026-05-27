@@ -6,14 +6,14 @@ interface EvolutionTimelineProps {
 
 const EvolutionTimeline = ({ currentPhase }: EvolutionTimelineProps) => {
   return (
-    <div className="flex items-center justify-center gap-2 rounded-full bg-[color:var(--ui-bg)] px-4 py-2">
+    <div className="flex items-center justify-center gap-4 rounded-full bg-[color:var(--ui-bg)] px-8 py-4">
       {phases.map((phase, index) => {
         const active = index === currentPhase
         const completed = index < currentPhase
         return (
           <div
             key={phase.id}
-            className={`h-2 w-8 rounded-full transition ${
+            className={`h-4 w-16 rounded-full transition ${
               active
                 ? 'bg-[color:var(--accent)]'
                 : completed

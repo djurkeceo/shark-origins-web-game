@@ -58,6 +58,7 @@ export interface GameEntity extends Entity {
   vx?: number
   vy?: number
   hazard?: boolean
+  facing?: 'left' | 'right'
 }
 
 export interface GameBounds {
@@ -81,6 +82,7 @@ export interface GameSnapshot {
   asteroidSpawnTimer: number
   adaptations: string[]
   bounds: GameBounds
+  pendingFactIndex?: number | null
 }
 
 export interface InputVector {
