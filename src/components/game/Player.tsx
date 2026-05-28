@@ -10,7 +10,7 @@ const Player = ({ player, sprite }: PlayerProps) => {
   const size = PLAYER_SIZE
   const left = player.x - size / 2
   const top = player.y - size / 2
-  const scaleX = player.facing === 'left' ? -1 : 1
+  const scaleX = player.facing === 'right' ? -1 : 1
 
   return (
     <div

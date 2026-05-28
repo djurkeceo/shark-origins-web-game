@@ -3,7 +3,7 @@ import type { GameBounds, GameEntity, PhaseData } from '../types/game'
 import netSprite from '../assets/tiny_plankton_cluster.png'
 import asteroidSprite from '../assets/small_school_fish.png'
 
-export const PLAYER_SIZE = 96
+export const PLAYER_SIZE = 120
 export const PREDATOR_SIZE = 110
 export const FOOD_SIZE = 56
 export const OBSTACLE_SIZE = 100
