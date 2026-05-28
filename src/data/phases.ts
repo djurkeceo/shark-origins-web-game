@@ -128,6 +128,7 @@ export const phases: PhaseData[] = [
     backgroundColor: '#061520',
     predatorSprites: [orca],
     foodSprite: tuna,
+    foodFleeSpeed: 40,
     predatorCount: 1,
     foodCount: 25,
     predatorSpeed: 2.2,

@@ -136,8 +136,9 @@ const updateEntities = (
       const dx = entity.x - player.x
       const dy = entity.y - player.y
       const distance = Math.hypot(dx, dy) || 1
-      const stepX = (dx / distance) * FOOD_FLEE_SPEED * delta
-      const stepY = (dy / distance) * FOOD_FLEE_SPEED * delta
+      const fleeSpeed = phase.foodFleeSpeed ?? FOOD_FLEE_SPEED
+      const stepX = (dx / distance) * fleeSpeed * delta
+      const stepY = (dy / distance) * fleeSpeed * delta
       return {
         ...entity,
         x: clamp(entity.x + stepX, 0, bounds.width),

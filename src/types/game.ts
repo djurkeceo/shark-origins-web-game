@@ -41,6 +41,7 @@ export interface PhaseData {
   predatorSprites: string[]
   asteroidSprite?: string
   foodSprite: string
+  foodFleeSpeed?: number
   predatorCount: number
   foodCount: number
   predatorSpeed: number
