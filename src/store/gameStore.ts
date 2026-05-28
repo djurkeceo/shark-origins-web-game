@@ -27,6 +27,7 @@ export type GameAction =
   | { type: 'RETRY_PHASE' }
   | { type: 'ADVANCE_PHASE' }
   | { type: 'SHOW_FACTCARD' }
+  | { type: 'SET_PHASE'; phaseIndex: number }
   | { type: 'SET_GAME_STATE'; state: GameState; endReason?: EndReason | null }
   | { type: 'SET_BOUNDS'; bounds: GameBounds }
   | { type: 'TICK'; delta: number; input: InputVector }
@@ -206,6 +207,11 @@ const reducer = (state: GameSnapshot, action: GameAction): GameSnapshot => {
         : Math.min(state.phaseIndex + 1, phases.length - 1)
       const snap = createPhaseSnapshot(nextIndex, state.bounds, state.adaptations)
       // clear pendingFactIndex when starting next gameplay
+      return { ...snap, pendingFactIndex: null }
+    }
+    case 'SET_PHASE': {
+      if (action.phaseIndex < 0 || action.phaseIndex >= phases.length) return state
+      const snap = createPhaseSnapshot(action.phaseIndex, state.bounds, state.adaptations)
       return { ...snap, pendingFactIndex: null }
     }
     case 'SHOW_FACTCARD': {
