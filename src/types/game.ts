@@ -39,6 +39,7 @@ export interface PhaseData {
   backgroundImage: string
   backgroundColor: string
   predatorSprites: string[]
+  asteroidSprite?: string
   foodSprite: string
   predatorCount: number
   foodCount: number

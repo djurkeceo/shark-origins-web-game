@@ -102,6 +102,7 @@ export const phases: PhaseData[] = [
     backgroundImage: triassic,
     backgroundColor: '#111820',
     predatorSprites: [mosasaurus],
+    asteroidSprite: seaScorpion,
     foodSprite: smallFish,
     predatorCount: 3,
     foodCount: 25,

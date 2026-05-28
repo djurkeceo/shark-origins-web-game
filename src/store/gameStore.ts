@@ -275,8 +275,8 @@ const reducer = (state: GameSnapshot, action: GameAction): GameSnapshot => {
           const asteroid = createAsteroidEntity(
             `asteroid-${state.phase.id}-${Math.random().toString(16).slice(2)}`,
             state.bounds,
-                      state.phase.predatorSprites[0],
-                    )
+            state.phase.asteroidSprite ?? state.phase.predatorSprites[0],
+          )
           entitiesWithAsteroids = [...updatedEntities, asteroid]
           asteroidSpawnTimer = ASTEROID_SPAWN_INTERVAL
         }
