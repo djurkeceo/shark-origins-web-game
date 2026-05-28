@@ -38,6 +38,13 @@ const normalizeInput = (input: InputVector): InputVector => {
   return { x: input.x / length, y: input.y / length }
 }
 
+const randomBetween = (min: number, max: number) =>
+  Math.random() * (max - min) + min
+
+const FOOD_WANDER_MIN = 0.35
+const FOOD_WANDER_MAX = 1.1
+const FOOD_WANDER_STRENGTH = 0.45
+
 const createPhaseSnapshot = (
   phaseIndex: number,
   bounds: GameBounds,
@@ -137,12 +144,28 @@ const updateEntities = (
       const dy = entity.y - player.y
       const distance = Math.hypot(dx, dy) || 1
       const fleeSpeed = phase.foodFleeSpeed ?? FOOD_FLEE_SPEED
-      const stepX = (dx / distance) * fleeSpeed * delta
-      const stepY = (dy / distance) * fleeSpeed * delta
+      let wanderTimer = entity.wanderTimer ?? 0
+      let wanderAngle = entity.wanderAngle ?? Math.random() * Math.PI * 2
+      if (wanderTimer <= 0) {
+        wanderAngle = Math.random() * Math.PI * 2
+        wanderTimer = randomBetween(FOOD_WANDER_MIN, FOOD_WANDER_MAX)
+      } else {
+        wanderTimer -= delta
+      }
+      const wanderX = Math.cos(wanderAngle)
+      const wanderY = Math.sin(wanderAngle)
+      const blendedX = dx / distance + wanderX * FOOD_WANDER_STRENGTH
+      const blendedY = dy / distance + wanderY * FOOD_WANDER_STRENGTH
+      const blendedDistance = Math.hypot(blendedX, blendedY) || 1
+      const stepX = (blendedX / blendedDistance) * fleeSpeed * delta
+      const stepY = (blendedY / blendedDistance) * fleeSpeed * delta
+      const radius = entity.radius
       return {
         ...entity,
-        x: clamp(entity.x + stepX, 0, bounds.width),
-        y: clamp(entity.y + stepY, 0, bounds.height),
+        x: clamp(entity.x + stepX, radius, bounds.width - radius),
+        y: clamp(entity.y + stepY, radius, bounds.height - radius),
+        wanderAngle,
+        wanderTimer,
       }
     }
     if (entity.vy !== undefined) {

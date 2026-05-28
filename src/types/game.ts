@@ -59,6 +59,8 @@ export interface GameEntity extends Entity {
   radius: number
   vx?: number
   vy?: number
+  wanderAngle?: number
+  wanderTimer?: number
   hazard?: boolean
   facing?: 'left' | 'right'
 }
