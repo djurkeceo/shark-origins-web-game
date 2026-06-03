@@ -18,7 +18,7 @@ const IntroScreen = ({ onStart }: IntroScreenProps) => {
           Evolucija Ajkule
         </h1>
         <p className="max-w-2xl text-xl text-slate-200">
-          Kreni kroz 450 miliona godina evolucije ajkula. Preživi predatore,
+          Kreni kroz 500 miliona godina evolucije ajkula. Preživi predatore,
           sakupljaj plen i prilagodi se promenama okeana.
         </p>
         <div className="rounded-xl bg-[color:var(--ui-bg)] px-8 py-5 text-base text-slate-200">
