@@ -33,6 +33,7 @@ function App() {
   const nextPhase = phases[state.phaseIndex + 1] ?? state.phase
   const isSuccess = state.endReason === 'SUCCESS'
   const cheatBuffer = useRef('')
+  const factPhase = phases[state.pendingFactIndex ?? state.phaseIndex]
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -82,7 +83,9 @@ function App() {
       </Screen>
       <Screen active={state.gameState === 'FACTCARD'}>
         <FactCard
-          fact={phases[state.pendingFactIndex ?? state.phaseIndex].fact}
+          fact={factPhase.fact}
+          creatureSprite={factPhase.sharkSprite}
+          creatureName={factPhase.name}
           active={state.gameState === 'FACTCARD'}
           onContinue={() => dispatch({ type: 'ADVANCE_PHASE' })}
         />
