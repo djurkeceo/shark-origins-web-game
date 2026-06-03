@@ -11,10 +11,10 @@ export const ASTEROID_SIZE = 64
 export const NET_SIZE = 120
 
 export const SPEED_UNIT = 60
-export const PREDATOR_SPEED_UNIT = 50
+export const PREDATOR_SPEED_UNIT = 53
 export const FOOD_FLEE_SPEED = 55
 export const CURRENT_FORCE = 35
-export const ASTEROID_FALL_SPEED = 170
+export const ASTEROID_FALL_SPEED = 180
 export const ASTEROID_SPAWN_INTERVAL = 1.1
 
 export const clamp = (value: number, min: number, max: number) =>
