@@ -20,7 +20,6 @@ const HUD = ({
   timer,
   foodCollected,
   foodTotal,
-  foodTarget,
   specialMechanic,
 }: HUDProps) => {
   const minutes = Math.floor(timer / 60)
