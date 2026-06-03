@@ -1,6 +1,6 @@
 import type { GameBounds, GameEntity, PhaseData } from '../types/game'
 
-import netSprite from '../assets/tiny_plankton_cluster.png'
+import netSprite from '../assets/fishing_net.png'
 import asteroidSprite from '../assets/small_school_fish.png'
 
 export const PLAYER_SIZE = 120

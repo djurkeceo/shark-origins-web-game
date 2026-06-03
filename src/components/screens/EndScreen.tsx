@@ -62,7 +62,7 @@ const EndScreen = ({
           </ul>
         </div>
         <p className="mt-6 text-slate-200">
-          Ajkule postoje 450 miliona godina — preživele su 5 masovnih
+          Ajkule postoje 500 miliona godina — preživele su 5 masovnih
           izumiranja. One nisu 'savršene' — samo dovoljno prilagodljive.
         </p>
         <button
