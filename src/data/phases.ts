@@ -24,7 +24,7 @@ export const phases: PhaseData[] = [
   {
     id: 1,
     name: 'Pikaja',
-    era: 'Ordovicijum — 450 miliona godina pre nove ere',
+    era: 'Kambrijum — 505 miliona godina pre nove ere',
     duration: 90,
     sharkSprite: pikaia,
     backgroundImage: ordovician,
