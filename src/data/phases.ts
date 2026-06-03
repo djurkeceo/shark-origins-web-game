@@ -32,7 +32,7 @@ export const phases: PhaseData[] = [
     predatorSprites: [seaScorpion],
     foodSprite: plankton,
     predatorCount: 2,
-    foodCount: 25,
+    foodCount: 15,
     predatorSpeed: 1.5,
     playerSpeed: 3,
     fact: {
@@ -56,7 +56,7 @@ export const phases: PhaseData[] = [
     predatorSprites: [dunkleosteus],
     foodSprite: smallFish,
     predatorCount: 2,
-    foodCount: 25,
+    foodCount: 15,
     predatorSpeed: 2,
     playerSpeed: 3.5,
     fact: {
@@ -80,7 +80,7 @@ export const phases: PhaseData[] = [
     predatorSprites: [dunkleosteus],
     foodSprite: smallFish,
     predatorCount: 3,
-    foodCount: 25,
+    foodCount: 15,
     predatorSpeed: 2,
     playerSpeed: 3.5,
     fact: {
@@ -105,7 +105,7 @@ export const phases: PhaseData[] = [
     asteroidSprite: seaScorpion,
     foodSprite: smallFish,
     predatorCount: 3,
-    foodCount: 25,
+    foodCount: 15,
     predatorSpeed: 2.5,
     playerSpeed: 4,
     fact: {
@@ -130,7 +130,7 @@ export const phases: PhaseData[] = [
     foodSprite: tuna,
     foodFleeSpeed: 40,
     predatorCount: 1,
-    foodCount: 25,
+    foodCount: 15,
     predatorSpeed: 2.2,
     playerSpeed: 4.5,
     fact: {
@@ -154,7 +154,7 @@ export const phases: PhaseData[] = [
     predatorSprites: [orca],
     foodSprite: tuna,
     predatorCount: 2,
-    foodCount: 25,
+    foodCount: 15,
     predatorSpeed: 2.5,
     playerSpeed: 4,
     fact: {
