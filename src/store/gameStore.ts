@@ -236,7 +236,7 @@ const reducer = (state: GameSnapshot, action: GameAction): GameSnapshot => {
     case 'SET_PHASE': {
       if (action.phaseIndex < 0 || action.phaseIndex >= phases.length) return state
       const snap = createPhaseSnapshot(action.phaseIndex, state.bounds, state.adaptations)
-      return { ...snap, pendingFactIndex: null }
+      return { ...snap, gameState: 'FACTCARD', pendingFactIndex: action.phaseIndex }
     }
     case 'SHOW_FACTCARD': {
       // show fact for next phase index (if exists), otherwise current
