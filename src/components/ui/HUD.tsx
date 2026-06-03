@@ -44,7 +44,7 @@ const HUD = ({
           <div className="text-lg text-[color:var(--food-color)]">
             {foodCollected}/{foodTotal} ulovljeno
           </div>
-          <div className="text-sm text-slate-300">Cilj: {foodTarget}</div>
+          <div className="text-sm text-slate-300"></div>
           {specialMechanic === 'asteroid' && (
             <span className="text-xs text-slate-300">
               Kiša asteroida — vreme ubrzano
