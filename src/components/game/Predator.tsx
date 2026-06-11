@@ -7,7 +7,7 @@ interface PredatorProps {
 
 const Predator = ({ predator }: PredatorProps) => {
   const size = PREDATOR_SIZE
-  const scaleX = predator.facing === 'left' ? -1 : 1
+  const scaleX = predator.facing === 'right' ? -1 : 1
   return (
     <div
       className="absolute"

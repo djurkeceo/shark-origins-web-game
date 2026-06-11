@@ -39,7 +39,9 @@ export interface PhaseData {
   backgroundImage: string
   backgroundColor: string
   predatorSprites: string[]
+  asteroidSprite?: string
   foodSprite: string
+  foodFleeSpeed?: number
   predatorCount: number
   foodCount: number
   predatorSpeed: number
@@ -57,6 +59,8 @@ export interface GameEntity extends Entity {
   radius: number
   vx?: number
   vy?: number
+  wanderAngle?: number
+  wanderTimer?: number
   hazard?: boolean
   facing?: 'left' | 'right'
 }

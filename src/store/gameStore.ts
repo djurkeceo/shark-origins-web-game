@@ -27,6 +27,7 @@ export type GameAction =
   | { type: 'RETRY_PHASE' }
   | { type: 'ADVANCE_PHASE' }
   | { type: 'SHOW_FACTCARD' }
+  | { type: 'SET_PHASE'; phaseIndex: number }
   | { type: 'SET_GAME_STATE'; state: GameState; endReason?: EndReason | null }
   | { type: 'SET_BOUNDS'; bounds: GameBounds }
   | { type: 'TICK'; delta: number; input: InputVector }
@@ -36,6 +37,13 @@ const normalizeInput = (input: InputVector): InputVector => {
   if (length === 0) return input
   return { x: input.x / length, y: input.y / length }
 }
+
+const randomBetween = (min: number, max: number) =>
+  Math.random() * (max - min) + min
+
+const FOOD_WANDER_MIN = 0.35
+const FOOD_WANDER_MAX = 1.1
+const FOOD_WANDER_STRENGTH = 0.45
 
 const createPhaseSnapshot = (
   phaseIndex: number,
@@ -135,12 +143,29 @@ const updateEntities = (
       const dx = entity.x - player.x
       const dy = entity.y - player.y
       const distance = Math.hypot(dx, dy) || 1
-      const stepX = (dx / distance) * FOOD_FLEE_SPEED * delta
-      const stepY = (dy / distance) * FOOD_FLEE_SPEED * delta
+      const fleeSpeed = phase.foodFleeSpeed ?? FOOD_FLEE_SPEED
+      let wanderTimer = entity.wanderTimer ?? 0
+      let wanderAngle = entity.wanderAngle ?? Math.random() * Math.PI * 2
+      if (wanderTimer <= 0) {
+        wanderAngle = Math.random() * Math.PI * 2
+        wanderTimer = randomBetween(FOOD_WANDER_MIN, FOOD_WANDER_MAX)
+      } else {
+        wanderTimer -= delta
+      }
+      const wanderX = Math.cos(wanderAngle)
+      const wanderY = Math.sin(wanderAngle)
+      const blendedX = dx / distance + wanderX * FOOD_WANDER_STRENGTH
+      const blendedY = dy / distance + wanderY * FOOD_WANDER_STRENGTH
+      const blendedDistance = Math.hypot(blendedX, blendedY) || 1
+      const stepX = (blendedX / blendedDistance) * fleeSpeed * delta
+      const stepY = (blendedY / blendedDistance) * fleeSpeed * delta
+      const radius = entity.radius
       return {
         ...entity,
-        x: clamp(entity.x + stepX, 0, bounds.width),
-        y: clamp(entity.y + stepY, 0, bounds.height),
+        x: clamp(entity.x + stepX, radius, bounds.width - radius),
+        y: clamp(entity.y + stepY, radius, bounds.height - radius),
+        wanderAngle,
+        wanderTimer,
       }
     }
     if (entity.vy !== undefined) {
@@ -207,6 +232,11 @@ const reducer = (state: GameSnapshot, action: GameAction): GameSnapshot => {
       const snap = createPhaseSnapshot(nextIndex, state.bounds, state.adaptations)
       // clear pendingFactIndex when starting next gameplay
       return { ...snap, pendingFactIndex: null }
+    }
+    case 'SET_PHASE': {
+      if (action.phaseIndex < 0 || action.phaseIndex >= phases.length) return state
+      const snap = createPhaseSnapshot(action.phaseIndex, state.bounds, state.adaptations)
+      return { ...snap, gameState: 'FACTCARD', pendingFactIndex: action.phaseIndex }
     }
     case 'SHOW_FACTCARD': {
       // show fact for next phase index (if exists), otherwise current
@@ -275,8 +305,8 @@ const reducer = (state: GameSnapshot, action: GameAction): GameSnapshot => {
           const asteroid = createAsteroidEntity(
             `asteroid-${state.phase.id}-${Math.random().toString(16).slice(2)}`,
             state.bounds,
-                      state.phase.predatorSprites[0],
-                    )
+            state.phase.asteroidSprite ?? state.phase.predatorSprites[0],
+          )
           entitiesWithAsteroids = [...updatedEntities, asteroid]
           asteroidSpawnTimer = ASTEROID_SPAWN_INTERVAL
         }

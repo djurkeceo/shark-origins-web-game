@@ -24,7 +24,7 @@ export const phases: PhaseData[] = [
   {
     id: 1,
     name: 'Pikaja',
-    era: 'Ordovicijum — 450 miliona godina pre nove ere',
+    era: 'Kambrijum — 505 miliona godina pre nove ere',
     duration: 90,
     sharkSprite: pikaia,
     backgroundImage: ordovician,
@@ -32,7 +32,7 @@ export const phases: PhaseData[] = [
     predatorSprites: [seaScorpion],
     foodSprite: plankton,
     predatorCount: 2,
-    foodCount: 25,
+    foodCount: 15,
     predatorSpeed: 1.5,
     playerSpeed: 3,
     fact: {
@@ -56,7 +56,7 @@ export const phases: PhaseData[] = [
     predatorSprites: [dunkleosteus],
     foodSprite: smallFish,
     predatorCount: 2,
-    foodCount: 25,
+    foodCount: 15,
     predatorSpeed: 2,
     playerSpeed: 3.5,
     fact: {
@@ -80,7 +80,7 @@ export const phases: PhaseData[] = [
     predatorSprites: [dunkleosteus],
     foodSprite: smallFish,
     predatorCount: 3,
-    foodCount: 25,
+    foodCount: 15,
     predatorSpeed: 2,
     playerSpeed: 3.5,
     fact: {
@@ -102,9 +102,10 @@ export const phases: PhaseData[] = [
     backgroundImage: triassic,
     backgroundColor: '#111820',
     predatorSprites: [mosasaurus],
+    asteroidSprite: seaScorpion,
     foodSprite: smallFish,
     predatorCount: 3,
-    foodCount: 25,
+    foodCount: 15,
     predatorSpeed: 2.5,
     playerSpeed: 4,
     fact: {
@@ -127,9 +128,10 @@ export const phases: PhaseData[] = [
     backgroundColor: '#061520',
     predatorSprites: [orca],
     foodSprite: tuna,
-    predatorCount: 1,
-    foodCount: 25,
-    predatorSpeed: 2.2,
+    foodFleeSpeed: 40,
+    predatorCount: 2,
+    foodCount: 15,
+    predatorSpeed: 3.5,
     playerSpeed: 4.5,
     fact: {
       title: 'Adaptacija',
@@ -151,8 +153,8 @@ export const phases: PhaseData[] = [
     backgroundColor: '#0a1520',
     predatorSprites: [orca],
     foodSprite: tuna,
-    predatorCount: 2,
-    foodCount: 25,
+    predatorCount: 3,
+    foodCount: 15,
     predatorSpeed: 2.5,
     playerSpeed: 4,
     fact: {
